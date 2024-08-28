@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const morgan = require('morgan');
-const pool = require('./src/db.js');  // Importar el pool de conexiones
+const pool = require('./src/db');  // Importar el pool de conexiones
 
 require('dotenv').config();
 
@@ -17,33 +17,16 @@ app.use(cors({
   credentials: true
 }));
 
-// Configurar express-mysql-session con el pool existente
-const sessionStore = new MySQLStore({}, pool);
-
-/// Middleware
+// Middleware
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Configurar las sesiones usando MySQLStore
 app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: true,
-  store: sessionStore, // Utiliza el store configurado
   cookie: { secure: process.env.NODE_ENV === 'production' }
 }));
-
-// Ruta de prueba de la base de datos
-app.get('/test-db', async (req, res) => {
-  try {
-    const [rows] = await pool.query('SELECT 1 + 1 AS solution');
-    res.send(`Database connection works! Result: ${rows[0].solution}`);
-  } catch (error) {
-    console.error('Error connecting to the database:', error);
-    res.status(500).send('Error connecting to the database');
-  }
-});
 
 // Importar rutas
 const authRoutes = require('./src/authRoutes');
