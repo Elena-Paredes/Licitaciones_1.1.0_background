@@ -28,6 +28,17 @@ app.use(session({
   cookie: { secure: process.env.NODE_ENV === 'production' }
 }));
 
+// Ruta de prueba de la base de datos
+app.get('/', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT 1 + 1 AS solution');
+    res.send(`Database connection works! Result: ${rows[0].solution}`);
+  } catch (error) {
+    console.error('Error connecting to the database:', error);
+    res.status(500).send('Error connecting to the database');
+  }
+});
+
 // Importar rutas
 const authRoutes = require('./src/authRoutes');
 const departmentRoutes = require('./src/departmentRoutes');
