@@ -32,7 +32,7 @@ app.use(session({
 app.get('/', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT 1 + 1 AS solution');
-    res.send(`Database connection works! Result: ${rows[0].solution}`);
+    res.send(`¡BD conectada! Resultado: ${rows[0].solution}`);
   } catch (error) {
     console.error('Error connecting to the database:', error);
     res.status(500).send('Error connecting to the database');
