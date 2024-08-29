@@ -3,7 +3,7 @@ const path = require('path');
 const pool = require('./src/db');  // Asegúrate de que este sea el pool de conexiones configurado correctamente
 
 // Ruta al archivo SQL
-const sqlFilePath = path.join(__dirname, 'SQL', 'Tenders.sql');
+const sqlFilePath = path.join(__dirname, 'SQL', 'Tender.sql');  // Ajusta la ruta si es necesario
 
 // Leer el archivo SQL
 fs.readFile(sqlFilePath, 'utf8', (err, sql) => {
@@ -18,6 +18,15 @@ fs.readFile(sqlFilePath, 'utf8', (err, sql) => {
       console.error('Error executing SQL script:', error);
       return;
     }
-    console.log('Se crearon las tablas exitosamente');
+    console.log('Tables and relationships created successfully!');
+
+    // Opcional: Eliminar el archivo después de ejecutarlo
+    fs.unlink(sqlFilePath, (err) => {
+      if (err) {
+        console.error('Error deleting SQL file:', err);
+        return;
+      }
+      console.log('SQL file deleted successfully after execution.');
+    });
   });
 });

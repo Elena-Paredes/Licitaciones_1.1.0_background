@@ -7,7 +7,6 @@ DROP DATABASE Licitaciones_v2;
 
 */
 
-
 /*(1) Tabla de departamentos dentro de la empresa*/
 CREATE TABLE department (
     deptoId INT PRIMARY KEY AUTO_INCREMENT,
