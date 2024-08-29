@@ -3,7 +3,7 @@ const path = require('path');
 const pool = require('./src/db');  // Asegúrate de que este sea el pool de conexiones configurado correctamente
 
 // Ruta al archivo SQL
-const sqlFilePath = path.join(__dirname, 'sql', 'Tenders.sql');
+const sqlFilePath = path.join(__dirname, 'SQL', 'Tenders.sql');
 
 // Leer el archivo SQL
 fs.readFile(sqlFilePath, 'utf8', (err, sql) => {
@@ -18,6 +18,6 @@ fs.readFile(sqlFilePath, 'utf8', (err, sql) => {
       console.error('Error executing SQL script:', error);
       return;
     }
-    console.log('Tables and relationships created successfully!');
+    console.log('Se crearon las tablas exitosamente');
   });
 });

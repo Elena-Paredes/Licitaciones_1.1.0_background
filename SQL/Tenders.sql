@@ -1,7 +1,12 @@
 /*creación de base da datos de Licitacion V2 
 CREATE DATABASE Licitaciones_v2;
 USE Licitaciones_v2;
-DROP DATABASE Licitaciones_v2;*/
+DROP DATABASE Licitaciones_v2;
+
+/backend/SQL/Tenders.sql
+
+*/
+
 
 /*(1) Tabla de departamentos dentro de la empresa*/
 CREATE TABLE department (
