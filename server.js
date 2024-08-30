@@ -25,7 +25,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.NODE_ENV === 'production I' }
+  cookie: { secure: process.env.NODE_ENV === 'production' }
 }));
 
 // Ruta de prueba de la base de datos
