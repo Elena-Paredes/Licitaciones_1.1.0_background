@@ -11,10 +11,13 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Configurar CORS
-app.use(cors({
-    origin: 'https://main--licitacionesv2.netlify.app',
-}));
+// Configurar CORS de forma condicional
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production' ? 'https://licitacionesv2.netlify.app' : '*', // Usar el dominio correcto en producción
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    credentials: true, // Habilitar credenciales solo si es necesario
+};
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(morgan('dev'));
@@ -24,7 +27,11 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.NODE_ENV === 'production' }
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production', // Solo cookies seguras en producción
+    httpOnly: true, // Ayuda a mitigar ataques XSS
+    sameSite: 'lax' // Protege contra ataques CSRF
+  }
 }));
 
 // Ruta de prueba de la base de datos
