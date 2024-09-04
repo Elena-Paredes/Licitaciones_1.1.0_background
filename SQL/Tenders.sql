@@ -2,16 +2,18 @@
 CREATE DATABASE Licitaciones_v2;
 USE Licitaciones_v2;
 DROP DATABASE Licitaciones_v2;
-
 /backend/SQL/Tenders.sql
-
 */
+USE licitaciones_v2;
+SHOW TABLES;
+DROP DATABASE Licitaciones_v2;
+SHOW DATABASES;
 
 /*(1) Tabla de departamentos dentro de la empresa*/
 CREATE TABLE department (
     deptoId INT PRIMARY KEY AUTO_INCREMENT,
     deptoName VARCHAR(45) NOT NULL,
-    deptoDescription TEXT
+    deptoDesc TEXT
 );
 
 /*(2) Tabla de usuarios registrados en el sistema*/
@@ -24,7 +26,7 @@ CREATE TABLE user (
     phone VARCHAR(10) NOT NULL,
     creationDate DATE NOT NULL,
     lastAccess TIMESTAMP NOT NULL,
-    password VARCHAR(45) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     userPhoto BLOB NULL,
     deptoId INT NULL,
     FOREIGN KEY (deptoId) REFERENCES department(deptoId)
@@ -32,10 +34,9 @@ CREATE TABLE user (
 
 /*(3) Tabla de lineas de negocio*/
 CREATE TABLE business_unit (
-    businessUnitId INT PRIMARY KEY AUTO_INCREMENT,
-    businessUnitName VARCHAR(45) NOT NULL,
-    businessUnitDescription VARCHAR(45) NULL,
-    userId INT NULL
+    buId INT PRIMARY KEY AUTO_INCREMENT,
+    buName VARCHAR(45) NOT NULL,
+    buDesc VARCHAR(100) NULL
 );
 
 /*CATÁLOGOS*/

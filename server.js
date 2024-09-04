@@ -13,8 +13,7 @@ const port = process.env.PORT || 3001;
 
 // Configurar CORS
 app.use(cors({
-  origin: 'http://localhost:3000', // URL del frontend
-  credentials: true
+    origin: 'http://licitacionesv110background-production-be53.up.railway.app',
 }));
 
 // Middleware
