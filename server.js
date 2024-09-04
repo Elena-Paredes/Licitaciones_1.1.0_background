@@ -13,7 +13,7 @@ const port = process.env.PORT || 3001;
 
 // Configurar CORS
 app.use(cors({
-    origin: 'https://licitacionesv2.netlify.app',
+    origin: 'https://main--licitacionesv2.netlify.app',
 }));
 
 // Middleware
