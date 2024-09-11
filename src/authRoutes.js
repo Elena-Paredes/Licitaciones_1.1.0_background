@@ -2,7 +2,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const pool = require('./db'); // Asegúrate de exportar tu pool de conexiones en db.js
-
 const router = express.Router();
 
 // Ruta para registrar usuarios
@@ -33,8 +32,14 @@ router.post('/signin', async (req, res) => {
   try {
     console.log('Inicio de sesión para:', username);
 
-    // Buscar el usuario en la base de datos
-    const [rows] = await pool.execute('SELECT * FROM user WHERE username = ?', [username]);
+    // Buscar el usuario y el nombre del departamento
+    const [rows] = await pool.execute(
+      `SELECT u.*, d.deptoName 
+       FROM user u 
+       JOIN department d ON u.DeptoId = d.deptoId 
+       WHERE u.username = ?`, 
+      [username]
+    );
 
     if (rows.length === 0) {
       console.log('Usuario no encontrado');
@@ -56,7 +61,16 @@ router.post('/signin', async (req, res) => {
     await pool.execute('UPDATE user SET lastAccessDate = NOW() WHERE userId = ?', [user.userId]);
 
     // Iniciar sesión
-    res.json({ message: 'Inicio de sesión exitoso', user: { userId: user.userId, username: user.username } });
+    res.json({
+      message: 'Inicio de sesión exitoso',
+      user: {
+        userId: user.userId,
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        deptoName: user.deptoName, 
+      },
+    });
   } catch (error) {
     console.error('Error iniciando sesión:', error);
     res.status(500).json({ message: 'Error iniciando sesión' });

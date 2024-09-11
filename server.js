@@ -1,25 +1,22 @@
 // /backend/server.js
-
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const morgan = require('morgan');
 const pool = require('./src/db');  // Importar el pool de conexiones
-
-require('dotenv').config();
-
 const app = express();
 const port = process.env.PORT || 3001;
+// Importamos el módulo en la aplicación
+require('dotenv').config();
 
+// Middleware
 // Configurar CORS de forma condicional
 const corsOptions = {
-    origin: process.env.NODE_ENV === 'production' ? 'https://licitacionesv2.netlify.app' : '*', // Usar el dominio correcto en producción
+    origin: process.env.NODE_ENV === 'production' ? 'https://licitacionesv2.netlify.app' : '*', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
     credentials: true, // Habilitar credenciales solo si es necesario
 };
-app.use(cors(corsOptions));
-
-// Middleware
+app.use(cors(corsOptions)); 
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
