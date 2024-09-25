@@ -46,11 +46,13 @@ app.get('/', async (req, res) => {
 const authRoutes = require('./src/authRoutes');
 const departmentRoutes = require('./src/departmentRoutes');
 const tenderRoutes = require('./src/tenderRoutes');
+const catalogRoutes = require ('./src/catalogRoutes'); 
 
 // Usar rutas
-app.use('/api', authRoutes);
-app.use('/api', departmentRoutes);
-app.use('/api', tenderRoutes);
+app.use('/api', authRoutes);            // Rutas para autenticación
+app.use('/api', departmentRoutes); // Rutas para departamentos
+app.use('/api', tenderRoutes);         // Rutas para licitaciones
+app.use('/api/tender', catalogRoutes); // Rutas para catálogos
 
 // Iniciar el servidor
 app.listen(port, () => {
