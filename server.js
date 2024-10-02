@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const pool = require('./src/db');  // Importar el pool de conexiones
 const app = express();
 const port = process.env.PORT || 3001;
+
 // Importamos el módulo en la aplicación
 require('dotenv').config();
 
@@ -14,8 +15,9 @@ require('dotenv').config();
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production' ? 'https://licitacionesv2.netlify.app' : '*', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-    credentials: true, // Habilitar credenciales solo si es necesario
+    credentials: true, 
 };
+
 app.use(cors(corsOptions)); 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -48,11 +50,14 @@ const departmentRoutes = require('./src/departmentRoutes');
 const tenderRoutes = require('./src/tenderRoutes');
 const catalogRoutes = require ('./src/catalogRoutes'); 
 
+const tenderGeneralRoutes = require('./src/tenderGeneralRoutes');
+
 // Usar rutas
 app.use('/api', authRoutes);            // Rutas para autenticación
 app.use('/api', departmentRoutes); // Rutas para departamentos
 app.use('/api', tenderRoutes);         // Rutas para licitaciones
-app.use('/api/tender', catalogRoutes); // Rutas para catálogos
+app.use('/api', catalogRoutes); // Rutas para catálogos
+app.use('/api', tenderGeneralRoutes); 
 
 // Iniciar el servidor
 app.listen(port, () => {

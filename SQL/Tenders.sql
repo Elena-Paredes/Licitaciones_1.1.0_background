@@ -4,6 +4,8 @@ SHOW TABLES;
 DROP DATABASE Licitaciones_v2;
 CREATE DATABASE Licitaciones_v2;
 SHOW DATABASES;
+DESC tender;
+SELECT * FROM tender;
 
 /*(1) Tabla de departamentos dentro de la empresa*/
 CREATE TABLE department (
@@ -11,7 +13,6 @@ CREATE TABLE department (
     deptoName VARCHAR(45) NOT NULL,
     deptoDesc VARCHAR(120) NULL
 );
-
 /*(2) Tabla de usuarios registrados en el sistema*/
 CREATE TABLE user (
     userId INT PRIMARY KEY AUTO_INCREMENT,
@@ -21,7 +22,7 @@ CREATE TABLE user (
     email VARCHAR(45) NOT NULL,
     phone VARCHAR(10) NOT NULL,
     creationDate DATE NOT NULL,
-    lastAccess TIMESTAMP NOT NULL,
+    lastAccessDate TIMESTAMP NOT NULL,
     password VARCHAR(255) NOT NULL,
     userPhoto BLOB NULL,
     deptoId INT NULL,
@@ -34,44 +35,37 @@ CREATE TABLE business_unit (
     buName VARCHAR(45) NOT NULL,
     buDesc VARCHAR(100) NULL
 );
-
 /*(4) Tabla de estados de la républica*/
 CREATE TABLE state (
     stateId INT PRIMARY KEY AUTO_INCREMENT,
     stateName VARCHAR(45) NOT NULL
 );
-
 /*(5) Tabla de los hospitales registrados*/
 CREATE TABLE dependency (
     dependencyId INT PRIMARY KEY AUTO_INCREMENT,
     dependencyName VARCHAR(100) NOT NULL
 );
-
 /**********************************TIPOS************************************/
 /*(6) Tabla para tipo de contratación*/
 CREATE TABLE contract_type (
     contractTypeId INT PRIMARY KEY AUTO_INCREMENT,
     contractTypeName VARCHAR(45) NOT NULL
 );
-
 /*(7) Tabla para tipo de procedimiento */
 CREATE TABLE procedure_type (
     procedureTypeId INT PRIMARY KEY AUTO_INCREMENT,
     procedureTypeName VARCHAR(45) NOT NULL
 );
-
 /*(8) Tabla de tipo de carácter de la licitación*/
 CREATE TABLE character_type (
     characterTypeId INT PRIMARY KEY AUTO_INCREMENT,
     characterTypeName VARCHAR(55) NOT NULL
 );
-
 /*(9) Tabla de medio por el cual se envia la licitación*/
 CREATE TABLE medium_type (
     mediumTypeId INT PRIMARY KEY AUTO_INCREMENT,
     mediumTypeName VARCHAR(45) NOT NULL
 );
-
 /*(10) Tabla de criterio de evaluación*/
 CREATE TABLE criteria (
     criteriaId INT PRIMARY KEY AUTO_INCREMENT,
@@ -83,13 +77,11 @@ CREATE TABLE participation_status (
     participationStatusId INT PRIMARY KEY AUTO_INCREMENT,
     participationStatusName VARCHAR(45) NOT NULL
 );
-
 /*(12) Tabla del estatus del concurso*/
 CREATE TABLE contest_status (
     contestStatusId INT PRIMARY KEY AUTO_INCREMENT,
     contestStatusName VARCHAR(45) NOT NULL
 );
-
 /*(13) Tabla de incumplimientos de la licitación*/
 CREATE TABLE breach(
     breachStatusId INT PRIMARY KEY AUTO_INCREMENT,
@@ -100,13 +92,13 @@ CREATE TABLE breach(
 CREATE TABLE tender (
     tenderId INT PRIMARY KEY AUTO_INCREMENT,
     tenderNumber VARCHAR(55) UNIQUE NOT NULL,
-    tenderObjective VARCHAR(250) NULL,
-    publicationDate DATETIME NULL,
+    purpose VARCHAR(150) NOT NULL,
+    publicationDate DATETIME NOT NULL,
     basePublicationDate DATETIME NULL,
     basePurchaseDate DATETIME NULL,
     visitDate DATETIME NULL,
     sampleDate DATETIME NULL,
-    clarificationsMeetingDate DATETIME NULL,
+    clarificationMeetingDate DATETIME NULL,
     prequalificationDate DATETIME NULL,
     presentationDate DATETIME NULL,
     awardDate DATETIME NULL,
@@ -133,16 +125,14 @@ CREATE TABLE tender (
     FOREIGN KEY (criteriaId) REFERENCES criteria(criteriaId),
     FOREIGN KEY (participationStatusId) REFERENCES participation_status(participationStatusId),
     FOREIGN KEY (contestStatusId) REFERENCES contest_status(contestStatusId),
-     FOREIGN KEY (breachStatusId) REFERENCES breach(breachStatusId)
+	FOREIGN KEY (breachStatusId) REFERENCES breach(breachStatusId)
 );
-
 /*(15) Tabla de empresas*/
 CREATE TABLE company (
 	companyId INT PRIMARY KEY AUTO_INCREMENT,
     companyName VARCHAR (45),
     companyAddress VARCHAR (65)
 );
-
 /*(16) Tabla de licitación-empresa*/
 CREATE TABLE tender_company (
 	tenderId INT, 
